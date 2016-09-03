@@ -52,7 +52,6 @@ public class Solution
 
             {
                 System.out.print("Марш!");
-
             }
         }   //add your code here - добавь код тут
     }
