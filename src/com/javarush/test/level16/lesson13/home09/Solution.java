@@ -1,5 +1,9 @@
 package com.javarush.test.level16.lesson13.home09;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /* Только по-очереди!
 1. В классе Solution создать нить public static Read3Strings унаследовавшись от Thread.
 2. В методе run реализовать чтение с консоли трех строк.
@@ -27,8 +31,33 @@ public class Solution {
         Read3Strings t1 = new Read3Strings();
         Read3Strings t2 = new Read3Strings();
         t1.start();
+        t1.join();
         t2.start();
-        System.out.println(/*print t1 result here*/);
-        System.out.println(/*print t2 result here*/);
+        t2.join();
+        System.out.println(t1);
+        System.out.println(t2);
+    }
+
+    public static class Read3Strings extends Thread {
+        public String result = "";
+        public int count = 1;
+
+        @Override
+        public void run() {
+            try {
+                while (count <= 3) {
+                    String read = reader.readLine();
+                    result = result + read + " ";
+                    count++;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public String toString() {
+            return result;
+        }
     }
 }
