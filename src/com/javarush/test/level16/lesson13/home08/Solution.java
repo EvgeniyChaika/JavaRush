@@ -50,7 +50,15 @@ public class Solution {
         }
 
         public void run() {
-            //add your code here - добавьте код тут
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    String res = reader.readLine();
+                    result.add(res);
+                    countReadStrings++; //add your code here - добавьте код тут
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         @Override
