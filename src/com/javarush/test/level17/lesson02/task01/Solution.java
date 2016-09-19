@@ -14,8 +14,10 @@ import java.util.List;
 */
 
 public class Solution {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        NoteThread thread = new NoteThread();
+        thread.start();
     }
 
     public static class Note {
@@ -32,6 +34,17 @@ public class Solution {
                 System.out.println("Другая нить удалила нашу заметку");
             } else if (!note.startsWith(threadName)) {
                 System.out.println("Нить [" + threadName + "] удалила чужую заметку [" + note + "]");
+            }
+        }
+    }
+
+    public static class NoteThread extends Thread {
+
+        @Override
+        public void run() {
+            for (int index = 0; index < 999; ++index) {
+                Note.addNote(getName() + "-Note" + index);
+                Note.removeNote(getName());
             }
         }
     }
