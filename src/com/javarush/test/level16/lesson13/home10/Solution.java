@@ -1,9 +1,9 @@
 package com.javarush.test.level16.lesson13.home10;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /* Последовательный вывод файлов
 1. Разберись, что делает программа.
@@ -24,6 +24,16 @@ public class Solution {
     public static String firstFileName;
     public static String secondFileName;
 
+    static {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            firstFileName = bufferedReader.readLine();
+            secondFileName = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws InterruptedException {
         systemOutPrintln(firstFileName);
         systemOutPrintln(secondFileName);
@@ -33,6 +43,7 @@ public class Solution {
         ReadFileInterface f = new ReadFileThread();
         f.setFileName(fileName);
         f.start();
+        f.join();
         System.out.println(f.getFileContent());
     }
 
@@ -45,5 +56,35 @@ public class Solution {
         void join() throws InterruptedException;
 
         void start();
+    }
+
+    public static class ReadFileThread extends Thread implements ReadFileInterface {
+
+        private String name = "";
+        private String content = "";
+
+        @Override
+        public void setFileName(String fullFileName) {
+            this.name = fullFileName;
+        }
+
+        @Override
+        public String getFileContent() {
+            return content;
+        }
+
+        @Override
+        public void run() {
+            try {
+                String str;
+                BufferedReader reader = new BufferedReader(new FileReader(name));
+                while ((str = reader.readLine()) !=null){
+                    content += str + " ";
+                }
+                reader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
