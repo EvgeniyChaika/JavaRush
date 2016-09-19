@@ -40,4 +40,12 @@ public class Solution {
             }
         }
     }
+
+    public static class SortThread extends Thread {
+
+        @Override
+        public void run() {
+            sort(testArray);
+        }
+    }
 }
