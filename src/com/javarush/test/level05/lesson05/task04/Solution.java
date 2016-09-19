@@ -11,9 +11,6 @@ public class Solution {
         Cat cat1 = new Cat("Васька", 3, 7, 10);
         Cat cat2 = new Cat("Кузя", 4, 4, 18);
         Cat cat3 = new Cat("Узбек", 1, 8, 10);
-
-
-
     }
 
     public static class Cat {
@@ -32,7 +29,5 @@ public class Solution {
             this.weight = weight;
             this.strength = strength;
         }
-
-
     }
 }
