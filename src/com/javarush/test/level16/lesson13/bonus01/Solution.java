@@ -1,6 +1,5 @@
 package com.javarush.test.level16.lesson13.bonus01;
 
-import com.javarush.test.level16.lesson13.bonus01.ImageReaderFactory;
 import com.javarush.test.level16.lesson13.bonus01.common.ImageReader;
 import com.javarush.test.level16.lesson13.bonus01.common.ImageTypes;
 
