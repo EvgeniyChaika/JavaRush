@@ -5,7 +5,7 @@ package com.javarush.test.level17.lesson06.task02;
 */
 
 public class Solution {
-    public static int proposal = 0;
+    public volatile static int proposal = 0;
 
     public static void main(String[] args) {
         new MakeProposal().start();
