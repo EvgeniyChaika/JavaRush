@@ -28,12 +28,34 @@ public class Solution {
         isStopped = true;
     }
 
-    public static class Apteka {
+    public static class Apteka implements Runnable {
 
+        @Override
+        public void run() {
+            while (!isStopped) {
+                drugsController.buy(getRandomDrug(), getRandomCount());
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    public static class Person {
+    public static class Person implements Runnable {
 
+        @Override
+        public void run() {
+            while (!isStopped) {
+                drugsController.sell(getRandomDrug(), getRandomCount());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public static int getRandomCount() {
