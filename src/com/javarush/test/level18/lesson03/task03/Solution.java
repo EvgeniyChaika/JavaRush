@@ -32,7 +32,9 @@ public class Solution {
 
         int max = Integer.MIN_VALUE;
         for (int h : count) {
-            if (h > max) max = h;
+            if (h > max) {
+                max = h;
+            }
         }
 
         for (int i = 0; i < list.size(); i++) {
