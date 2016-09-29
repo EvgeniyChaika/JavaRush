@@ -13,9 +13,46 @@ fileOutputName - имя файла, куда необходимо записат
 -d - ключ указывает, что необходимо расшифровать данные
 */
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
+        if (args.length < 3) {
+            throw new IllegalArgumentException();
+        }
+
+        String file1 = args[1];
+        String file2 = args[2];
+
+        FileInputStream inputStream = new FileInputStream(file1);
+        FileOutputStream outputStream = new FileOutputStream(file2);
+
+        if (("-e").equals(args[0])) {
+            while (inputStream.available() > 0) {
+                byte[] buffer = new byte[inputStream.available()];
+                int count = inputStream.read(buffer);
+                for (int i = 0; i < buffer.length; i++) {
+                    buffer[i] = (byte) (buffer[i] + 1);
+                }
+                outputStream.write(buffer, 0, count);
+            }
+        } else if (("-d").equals(args[0])) {
+            while (inputStream.available() > 0) {
+                byte[] buffer = new byte[inputStream.available()];
+                int count = inputStream.read(buffer);
+                for (int i = 0; i < buffer.length; i++) {
+                    buffer[i] = (byte) (buffer[i] - 1);
+                }
+                outputStream.write(buffer, 0, count);
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+        inputStream.close();
+        outputStream.close();
     }
-
 }
