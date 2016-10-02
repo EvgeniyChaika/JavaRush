@@ -24,8 +24,87 @@ id productName price quantity
 19847983Куртка для сноубордистов, разм10173.991234
 */
 
-public class Solution {
-    public static void main(String[] args) {
+import java.io.*;
+import java.util.ArrayList;
 
+public class Solution {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = bufferedReader.readLine();
+        bufferedReader.close();
+        String productName = "";
+
+        ArrayList<String> list = getStringList(fileName);
+        ArrayList<Long> idList = getIdList(fileName);
+        PrintWriter printWriter;
+        int index = idList.indexOf(Long.parseLong(args[1]));
+
+        if (("-u").equals(args[0])) {
+            for (int i = 2; i < args.length - 2; i++)
+                productName = productName + args[i] + " ";
+
+            String trueProductName = setSpaces(productName, 30);
+            String truePrice = setSpaces(args[args.length - 2], 8);
+            String trueQuantity = setSpaces(args[args.length - 1], 4);
+            String id = setSpaces(args[1], 8);
+            String ourString = id + trueProductName + truePrice + trueQuantity;
+
+            if (!idList.contains(Long.parseLong(args[1]))) {
+                printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName, true)));
+                printWriter.println(ourString);
+            } else {
+                list.set(index, ourString);
+                printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+                for (String aString : list)
+                    printWriter.println(aString);
+            }
+            printWriter.close();
+        } else if (("-d").equals(args[0])) {
+            list.remove(index);
+            printWriter = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+            for (String aString : list)
+                printWriter.println(aString);
+            printWriter.close();
+        }
+    }
+
+    private static ArrayList<String> getStringList(String fileName) throws IOException {
+        ArrayList<String> allList = new ArrayList<>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            allList.add(line);
+        }
+        bufferedReader.close();
+        return allList;
+    }
+
+    private static ArrayList<Long> getIdList(String fileName) throws IOException {
+        ArrayList<Long> allIds = new ArrayList<>();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        String line;
+        Long currentId;
+        while ((line = bufferedReader.readLine()) != null) {
+            line = line.substring(0, 8).replaceAll("\\s", "");
+            currentId = Long.parseLong(line);
+            allIds.add(currentId);
+        }
+        bufferedReader.close();
+        return allIds;
+    }
+
+
+    private static String setSpaces(String previousName, int count) {
+        String trueName;
+        if (previousName.length() > count)
+            trueName = previousName.substring(0, count);
+        else {
+            String s = "";
+            for (int i = 0; i < (count - previousName.length()); i++)
+                s = s + " ";
+            trueName = previousName + s;
+        }
+        return trueName;
     }
 }
