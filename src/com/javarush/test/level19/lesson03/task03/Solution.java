@@ -17,7 +17,51 @@ import java.util.Map;
 public class Solution {
     public static Map<String, String> countries = new HashMap<String, String>();
 
-    public static class IncomeDataAdapter {
+    static {
+        countries.put("UA", "Ukraine");
+        countries.put("RU", "Russia");
+        countries.put("CA", "Canada");
+    }
+
+    public static class IncomeDataAdapter implements Customer, Contact {
+
+        private IncomeData incomeData;
+
+        public IncomeDataAdapter(IncomeData incomeData) {
+            this.incomeData = incomeData;
+        }
+
+        @Override
+        public String getCompanyName() {
+            return this.incomeData.getCompany();
+        }
+
+        @Override
+        public String getCountryName() {
+            return countries.get(this.incomeData.getCountryCode());
+        }
+
+        @Override
+        public String getName() {
+            return this.incomeData.getContactLastName() + ", " + this.incomeData.getContactFirstName();
+        }
+
+        @Override
+        public String getPhoneNumber() {
+            String phoneNumber = this.incomeData.getPhoneNumber() + "";
+            String nulls = "";
+            if (phoneNumber.length() < 10) {
+                for (int i = 0; i < (10 - phoneNumber.length()); i++) {
+                    nulls = nulls + "0";
+                }
+            }
+            phoneNumber = nulls + phoneNumber;
+            String firstPart = phoneNumber.substring(0, 3);
+            String secondPart = phoneNumber.substring(3, 6);
+            String thirdPart = phoneNumber.substring(6, 8);
+            String fourthPart = phoneNumber.substring(8);
+            return "+" + this.incomeData.getCountryPhoneCode() + "(" + firstPart + ")" + secondPart + "-" + thirdPart + "-" + fourthPart;
+        }
     }
 
     public static interface IncomeData {
