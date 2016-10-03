@@ -15,8 +15,50 @@ CA Canada
 public class Solution {
     private static Map<String, String> countries = new HashMap<String, String>();
 
-    public static class DataAdapter {
+    static {
+        countries.put("Ukraine", "UA");
+        countries.put("Russia", "RU");
+        countries.put("Canada", "CA");
+    }
+
+    public static class DataAdapter implements RowItem {
+
+        private Customer customer;
+        private Contact contact;
+
         public DataAdapter(Customer customer, Contact contact) {
+            this.customer = customer;
+            this.contact = contact;
+        }
+
+        @Override
+        public String getCountryCode() {
+            return countries.get(this.customer.getCountryName());
+        }
+
+        @Override
+        public String getCompany() {
+            return this.customer.getCompanyName();
+        }
+
+        @Override
+        public String getContactFirstName() {
+            String[] person = this.contact.getName().split(", ");
+            return person[1];
+        }
+
+        @Override
+        public String getContactLastName() {
+            String[] person = this.contact.getName().split(", ");
+            return person[0];
+        }
+
+        @Override
+        public String getDialString() {
+            String phoneNumber = this.contact.getPhoneNumber();
+            String rowDigits = phoneNumber.replaceAll("[^+0-9]", "");
+            System.out.println(rowDigits);
+            return "callto://" + rowDigits;
         }
     }
 
