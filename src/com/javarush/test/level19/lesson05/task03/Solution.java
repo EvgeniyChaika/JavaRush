@@ -13,8 +13,41 @@ package com.javarush.test.level19.lesson05.task03;
 12 14 1
 */
 
-public class Solution {
-    public static void main(String[] args) {
+import java.io.*;
+import java.util.ArrayList;
 
+public class Solution {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName1 = bufferedReader.readLine();
+        String fileName2 = bufferedReader.readLine();
+        bufferedReader.close();
+
+        BufferedReader fileReader = new BufferedReader(new FileReader(fileName1));
+        ArrayList<String> list = new ArrayList<>();
+        String nextLine;
+        while ((nextLine = fileReader.readLine()) != null) {
+            list.add(nextLine);
+        }
+        fileReader.close();
+
+        String[] wordArray;
+        ArrayList<Integer> numbers = new ArrayList<>();
+        for (String aString : list) {
+            wordArray = aString.split(" ");
+            for (String aWordArray : wordArray) {
+                try {
+                    numbers.add(Integer.parseInt(aWordArray));
+                } catch (NumberFormatException ignored) {
+                    ignored.printStackTrace();
+                }
+            }
+        }
+
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName2));
+        for (Integer number : numbers)
+            bufferedWriter.write(number + " ");
+        bufferedWriter.close();
     }
 }
