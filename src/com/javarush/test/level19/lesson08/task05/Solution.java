@@ -15,10 +15,27 @@ it's a text for testing
 it's a text for testing
 */
 
+import java.io.*;
+
 public class Solution {
     public static TestString testString = new TestString();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String fileName = bufferedReader.readLine();
+        bufferedReader.close();
+
+        PrintStream defaultPrintStream = System.out;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteArrayOutputStream));
+        testString.printSomething();
+        System.setOut(defaultPrintStream);
+
+        String result = byteArrayOutputStream.toString();
+        PrintWriter printWriter = new PrintWriter(new FileWriter(fileName));
+        printWriter.println(result);
+        printWriter.close();
+        System.out.println(result);
     }
 
     public static class TestString {
