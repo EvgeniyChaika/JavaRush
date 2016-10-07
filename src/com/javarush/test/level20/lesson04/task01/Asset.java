@@ -1,6 +1,8 @@
 package com.javarush.test.level20.lesson04.task01;
 
-public class Asset {
+import java.io.Serializable;
+
+public class Asset implements Serializable {
     public Asset(String name) {
         this.name = name;
     }
