@@ -35,10 +35,10 @@ public class Solution {
             inputStream.close();
 
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("Oops, something wrong with my file");
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("Oops, something wrong with save/load method");
         }
     }
@@ -50,10 +50,27 @@ public class Solution {
 
         public void save(OutputStream outputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            String hasStaticString = (staticString != null) ? "yes" : "no";
+            printWriter.println(hasStaticString);
+            if ("yes".equals(hasStaticString)) {
+                printWriter.println(staticString);
+            }
+            printWriter.println(this.i);
+            printWriter.println(this.j);
+            printWriter.close();
         }
 
         public void load(InputStream inputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String hasStaticString = bufferedReader.readLine();
+            if ("yes".equals(hasStaticString)) {
+                staticString = bufferedReader.readLine();
+            }
+            this.i = Integer.parseInt(bufferedReader.readLine());
+            this.j = Integer.parseInt(bufferedReader.readLine());
+            bufferedReader.close();
         }
     }
 }
