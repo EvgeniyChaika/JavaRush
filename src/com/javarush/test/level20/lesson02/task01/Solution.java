@@ -56,10 +56,32 @@ public class Solution {
 
         public void save(OutputStream outputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            String hasName = (this.name != null) ? "yes" : "no";
+            printWriter.println(hasName);
+            if ("yes".equals(hasName)) {
+                printWriter.println(this.name);
+                if (this.assets.size() > 0) {
+                    for (Asset current : this.assets) {
+                        printWriter.println(current.getName());
+                    }
+                }
+            }
+            printWriter.close();
         }
 
         public void load(InputStream inputStream) throws Exception {
             //implement this method - реализуйте этот метод
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String hasName = reader.readLine();
+            if ("yes".equals(hasName)) {
+                this.name = reader.readLine();
+                String assetName;
+                while ((assetName = reader.readLine()) != null) {
+                    this.assets.add(new Asset(assetName));
+                }
+            }
+            reader.close();
         }
     }
 }
