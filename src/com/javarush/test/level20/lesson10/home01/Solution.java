@@ -1,11 +1,13 @@
 package com.javarush.test.level20.lesson10.home01;
 
+import java.io.Serializable;
+
 /* Минимум изменений
 Используя минимум изменений кода сделайте так, чтобы сериализация класса C стала возможной.
 */
 public class Solution {
 
-    public class A {
+    public class A implements Serializable {
         String name = "A";
 
         public A(String name) {
