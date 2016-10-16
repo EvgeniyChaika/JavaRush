@@ -1,22 +1,23 @@
 package com.javarush.test.level20.lesson10.home05;
 
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 /* Сериализуйте Person
 Сериализуйте класс Person стандартным способом. При необходимости поставьте полям модификатор transient.
 */
-public class Solution {
+public class Solution implements Serializable {
 
-    public static class Person {
+    public static class Person implements Serializable {
         String firstName;
         String lastName;
-        String fullName;
-        final String greetingString;
+        transient String fullName;
+        transient final String greetingString;
         String country;
         Sex sex;
-        PrintStream outputStream;
-        Logger logger;
+        transient PrintStream outputStream;
+        transient Logger logger;
 
         Person(String firstName, String lastName, String country, Sex sex) {
             this.firstName = firstName;
@@ -30,7 +31,7 @@ public class Solution {
         }
     }
 
-    enum Sex {
+    enum Sex implements Serializable {
         MALE,
         FEMALE
     }
