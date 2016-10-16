@@ -23,6 +23,32 @@ public class Solution {
     }
 
     public static int getRectangleCount(byte[][] a) {
-        return 0;
+        byte[][] b = a.clone();
+        for (int i = 0; i < a.length; i++) {
+            b[i] = a[i].clone();
+        }
+
+        int rectCount = 0;
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b.length; j++) {
+                if (b[i][j] == 1) {
+                    rectCount++;
+                    for (int k = i; k < b.length; k++) {
+                        if (b[k][j] == 0) {
+                            break;
+                        }
+                        for (int l = j; l < b.length; l++) {
+                            if (b[k][l] == 1) {
+                                b[k][l] = 0;
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            System.out.println();
+        }
+        return rectCount;
     }
 }
