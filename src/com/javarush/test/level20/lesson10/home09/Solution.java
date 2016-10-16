@@ -1,5 +1,6 @@
 package com.javarush.test.level20.lesson10.home09;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 Сериализовать Solution.
 Все данные должны сохранить порядок следования.
 */
-public class Solution {
+public class Solution implements Serializable {
     int node;
     List<Solution> edges = new LinkedList<>();
 }
