@@ -2,6 +2,8 @@ package com.javarush.test.level21.lesson02.task02;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 /* Сравниваем модификаторы
 Реализовать логику метода isAllModifiersContainSpecificModifier, который проверяет,
@@ -18,7 +20,13 @@ public class Solution {
     }
 
     public static boolean isAllModifiersContainSpecificModifier(int allModifiers, int specificModifier) {
-        return false;
+        byte[] allModifiersBytes = ByteBuffer.allocate(4).putInt(allModifiers).array();
+        byte[] specificModifierBytes = ByteBuffer.allocate(4).putInt(specificModifier).array();
+        byte[] result = new byte[4];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = (byte) (allModifiersBytes[i] & specificModifierBytes[i]);
+        }
+        return Arrays.equals(result, specificModifierBytes);
     }
 
     private static Method getMainMethod() {
